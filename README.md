@@ -1,1 +1,1 @@
-# euler_method
+# Euler method solver

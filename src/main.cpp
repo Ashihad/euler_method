@@ -17,7 +17,7 @@ int main() {
 
     EulerSolver solver(init_params);
     solver.run();
-    // solver.printResults();
+    solver.printResults();
     solver.saveResults();
 
     return 0;

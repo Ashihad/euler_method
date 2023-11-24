@@ -33,3 +33,4 @@ class EulerSolver {
         double get_pot_e(size_t);
         double get_total_e(size_t);
 };
+ 

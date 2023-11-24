@@ -78,3 +78,4 @@ void EulerSolver::saveResults(string filename) {
     }
     file.close();
 }
+ 

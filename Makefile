@@ -21,4 +21,4 @@ logic.o: logic.cpp
 	g++ -c $(srcdir)/logic.cpp -I$(hdrdir) -I$(eigen) $(flags) -o $(objdir)/logic.o
 
 clean:
-	@rm $(objdir)/*  > /dev/null 2>&1 || echo "No files to remove"
+	@rm $(objdir)/*  > /dev/null 2>&1 || echo "No files to remove" 
