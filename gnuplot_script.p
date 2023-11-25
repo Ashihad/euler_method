@@ -1,4 +1,4 @@
-set size 500,500
+#set size 500,500
 set title "Phase portrait (X(t), V(t))"
 set xlabel "X [m]"
 set ylabel "V [m/s]"

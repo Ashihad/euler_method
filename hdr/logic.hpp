@@ -1,4 +1,5 @@
 #include <Eigen/Dense>
+#include <functional>
 
 using namespace std;
 using namespace Eigen;
@@ -12,13 +13,13 @@ struct sim_params {
     double t_max;
 };
 
-class EulerSolver {
+class Solver {
     public:
-        EulerSolver(struct sim_params);
-        void run();
-        void printResults();
-        void saveResults(string filename="results.txt");
-    private:
+        Solver(struct sim_params);
+        virtual void run() = 0;
+        virtual void printResults() const;
+        virtual void saveResults(string filename="results.txt") const;
+    protected:
         struct sim_params params;
         size_t max_iter;
         Matrix<double, 1, Dynamic> time_tab;
@@ -27,10 +28,17 @@ class EulerSolver {
         Matrix<double, 1, Dynamic> kin_e_tab;
         Matrix<double, 1, Dynamic> pot_e_tab;
         Matrix<double, 1, Dynamic> total_e_tab;
-        double pot(double);
-        double dpot_dx(double);
-        double get_kin_e(size_t);
-        double get_pot_e(size_t);
-        double get_total_e(size_t);
+        function<double(double)> pot;
+        function<double(double)> dpot_dx;
+        double get_kin_e(size_t) const;
+        double get_pot_e(size_t) const;
+        double get_total_e(size_t) const;
 };
+
+class EulerSolver: public Solver {
+    public:
+        EulerSolver(struct sim_params);
+        virtual void run();
+};
+        
  
