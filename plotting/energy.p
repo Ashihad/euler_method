@@ -7,17 +7,17 @@ set yrange [-3:3]
 set style line 1 \
     pointtype 7 \
     pointsize 0.2 \
-    linecolor rgb 'green'
+    linecolor rgb 'red'
 
-set style line 1 \
+set style line 2 \
     pointtype 7 \
     pointsize 0.2 \
     linecolor rgb 'blue'
 
-set style line 1 \
+set style line 3 \
     pointtype 7 \
     pointsize 0.2 \
-    linecolor rgb 'red'
+    linecolor rgb 'green'
 
 plot "results.txt" u 2:5 with points ls 1 title "Kinetic energy", \
     "results.txt" u 2:6 with points ls 2 title "Potential energy", \

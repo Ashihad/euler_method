@@ -7,15 +7,16 @@ using namespace std;
 using namespace Eigen;
 
 int main() {
-    sim_params init_params {};
-    init_params.m = 1;      // kg
-    init_params.v0 = 0;     // m/s
-    init_params.x0 = 2.8;   // m
-    init_params.dt = 0.01;  // s
-    init_params.t_min = 0;  // s
-    init_params.t_max = 20; // s
+    sim_params basic_init_params {};
+    basic_init_params.m = 1;
+    basic_init_params.v0 = 0;
+    basic_init_params.x0 = 2.8; 
+    basic_init_params.dt = 0.01;
+    basic_init_params.t_min = 0;
+    basic_init_params.t_max = 20;
+    basic_init_params.alpha = 0;
 
-    ExplicitEulerSolver solver(init_params);
+    ExplicitEulerSolver solver(basic_init_params);
     solver.run();
     solver.saveResults();
 

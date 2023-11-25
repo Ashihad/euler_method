@@ -25,11 +25,15 @@ main.o: main.cpp
 Solver.o:
 	g++ -c $(srcdir)/Solver.cpp -I$(hdrdir) -I$(eigen) $(flags) -o $(objdir)/Solver.o
 
-ExplicitEulerSolver.o:
+ExplicitEulerSolver.o: ExplicitEulerSolver.cpp
 	g++ -c $(srcdir)/ExplicitEulerSolver.cpp -I$(hdrdir) -I$(eigen) $(flags) -o $(objdir)/ExplicitEulerSolver.o
+
+run:
+	./main
 
 plot:
 	gnuplot -persist $(plotdir)/phase.p $(plotdir)/energy.p
 
 clean:
-	@rm $(objdir)/*  > /dev/null 2>&1 || echo "No files to remove" 
+	@rm $(objdir)/*  > /dev/null 2>&1 || echo "No files to remove"
+	@rm main
