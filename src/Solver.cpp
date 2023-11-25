@@ -33,6 +33,7 @@ Solver::Solver(struct sim_params init_struct):
 }
 
 void Solver::printResults() const {
+    cout << "t: " << time_tab << endl;
     cout << "x: " << x_tab << endl;
     cout << "v: " << v_tab << endl;
     cout << "Ek: " << kin_e_tab << endl;
@@ -43,9 +44,12 @@ void Solver::printResults() const {
 void Solver::saveResults(string filename) const {
     ofstream file;
     file.open(filename);
-    file << "iter x v Ek Ep E" << endl;
+    file << "iter t x v Ek Ep E" << endl;
     for (size_t iter = 0; iter < max_iter; ++iter) {
-        file << iter << " " << x_tab(iter) << " " << v_tab(iter) << " " << kin_e_tab(iter) << " " << pot_e_tab(iter) << " " << total_e_tab(iter) << endl;
+        file << iter << " " << time_tab(iter) << " " \
+        << x_tab(iter) << " " << v_tab(iter) << " " \
+        << kin_e_tab(iter) << " " << pot_e_tab(iter) << " " \
+        << total_e_tab(iter) << endl;
     }
     file.close();
 }

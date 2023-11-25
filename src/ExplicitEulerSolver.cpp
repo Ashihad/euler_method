@@ -2,10 +2,10 @@
 
 using namespace std;
 
-EulerSolver::EulerSolver(struct sim_params init_struct):
+ExplicitEulerSolver::ExplicitEulerSolver(struct sim_params init_struct):
     Solver(init_struct) {}
 
-void EulerSolver::run() {
+void ExplicitEulerSolver::run() {
     // main simulation loop
     for (size_t iter = 1; iter < max_iter; ++iter) {
         x_tab(iter) = x_tab(iter-1) + v_tab(iter-1)*params.dt;                          // definition of speed

@@ -15,9 +15,8 @@ int main() {
     init_params.t_min = 0;  // s
     init_params.t_max = 20; // s
 
-    EulerSolver solver(init_params);
+    ExplicitEulerSolver solver(init_params);
     solver.run();
-    solver.printResults();
     solver.saveResults();
 
     return 0;

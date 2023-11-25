@@ -35,10 +35,9 @@ class Solver {
         double get_total_e(size_t) const;
 };
 
-class EulerSolver: public Solver {
+class ExplicitEulerSolver: public Solver {
     public:
-        EulerSolver(struct sim_params);
+        ExplicitEulerSolver(struct sim_params);
         virtual void run();
 };
-        
  
