@@ -11,12 +11,13 @@ objfiles = \
 	$(objdir)/main.o \
 	$(objdir)/Solver.o \
 	$(objdir)/ExplicitEulerSolver.o \
+	$(objdir)/TrapezoidalSolver.o \
 
 linkedlibs = -lm
 
 flags = -Wall -Wextra -std=c++20 -O2
 
-main: main.o Solver.o ExplicitEulerSolver.o
+main: main.o Solver.o ExplicitEulerSolver.o TrapezoidalSolver.o
 	g++ $(objfiles) $(linkedlibs) -o main
 
 main.o: main.cpp
@@ -27,6 +28,9 @@ Solver.o:
 
 ExplicitEulerSolver.o: ExplicitEulerSolver.cpp
 	g++ -c $(srcdir)/ExplicitEulerSolver.cpp -I$(hdrdir) -I$(eigen) $(flags) -o $(objdir)/ExplicitEulerSolver.o
+
+TrapezoidalSolver.o: TrapezoidalSolver.cpp
+	g++ -c $(srcdir)/TrapezoidalSolver.cpp -I$(hdrdir) -I$(eigen) $(flags) -o $(objdir)/TrapezoidalSolver.o
 
 run:
 	./main

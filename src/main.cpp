@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 
-#include "logic.hpp"
+#include "Solvers.hpp"
 
 using namespace std;
 using namespace Eigen;
@@ -19,6 +19,8 @@ int main() {
     ExplicitEulerSolver solver(basic_init_params);
     solver.run();
     solver.saveResults();
+
+    TrapezoidalSolver solver2(basic_init_params);
 
     return 0;
 }
