@@ -8,9 +8,13 @@ using namespace std;
 int main() {
     sim_params init_params = gen_basic_init_params();
 
-    ExplicitEulerSolver esolver(init_params);
-    esolver.run();
-    esolver.saveResults("results_euler.txt");
+    ExplicitEulerSolver eesolver(init_params);
+    eesolver.run();
+    eesolver.saveResults("results_expl_euler.txt");
+
+    ImplicitEulerSolver iesolver(init_params);
+    iesolver.run();
+    iesolver.saveResults("results_impl_euler.txt");
 
     TrapezoidalSolver tsolver(init_params);
     tsolver.run();
