@@ -51,4 +51,7 @@ class TrapezoidalSolver: public Solver {
         virtual void run();
     protected:
         const double eps {1e-6};
+    private:
+        inline double F1(double, double, double, double);
+        inline double F2(double, double, double, double);
 };

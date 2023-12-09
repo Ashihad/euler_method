@@ -11,14 +11,15 @@ using namespace Eigen;
 TrapezoidalSolver::TrapezoidalSolver(struct sim_params& init_struct):
     Solver(init_struct) {}
 
-void TrapezoidalSolver::run() {
-    auto F1 = [&] (double x, double x_prev, double v, double v_prev) {
-        return x - x_prev - dt/2*v - dt/2*v_prev;
-    };
-    auto F2 = [&] (double x, double x_prev, double v, double v_prev) {
-        return v - v_prev - dt/2*(-1/m*dpot_dx(x) - alpha*v) - dt/2*(-1/m*dpot_dx(x_prev) - alpha*v_prev);
-    };
+inline double TrapezoidalSolver::F1(double x, double x_prev, double v, double v_prev) {
+    return x - x_prev - dt/2*v - dt/2*v_prev;
+}
 
+inline double TrapezoidalSolver::F2(double x, double x_prev, double v, double v_prev) {
+    return v - v_prev - dt/2*(-1/m*dpot_dx(x) - alpha*v) - dt/2*(-1/m*dpot_dx(x_prev) - alpha*v_prev);
+}
+
+void TrapezoidalSolver::run() {
     // lhs_matrix * lhs_vector = rhs_vector
     Matrix2f lhs_matrix;
     lhs_matrix(0, 0) = 1;
