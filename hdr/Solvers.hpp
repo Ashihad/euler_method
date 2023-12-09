@@ -19,6 +19,7 @@ class Solver {
         const double v0;
         const double x0;
         const double dt;
+        const double dx;
         const double t_min;
         const double t_max;
         const double alpha;
@@ -30,8 +31,8 @@ class Solver {
         Matrix<double, 1, Dynamic> pot_e_tab;
         Matrix<double, 1, Dynamic> total_e_tab;
         std::function<double(double)> pot;
-        std::function<double(double)> dpot_dx;
-        std::function<double(double)> d2pot_dx2;
+        double dpot_dx(double);
+        double d2pot_dx2(double);
         double get_kin_e(double) const;
         double get_pot_e(double) const;
         double get_total_e(double, double) const;

@@ -6,6 +6,7 @@ struct sim_params gen_basic_init_params() {
         .v0=0,
         .x0=2.8,
         .dt=0.01,
+        .dx=0.01,
         .t_min=0,
         .t_max=100,
         .alpha=0

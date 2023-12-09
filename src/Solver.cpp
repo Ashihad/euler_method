@@ -6,24 +6,20 @@
 
 using namespace std;
 
-Solver::Solver(struct sim_params init_struct):
+Solver::Solver(struct sim_params init_struct) :
     m {init_struct.m}, 
     v0 {init_struct.v0}, 
     x0 {init_struct.x0}, 
-    dt {init_struct.dt}, 
+    dt {init_struct.dt},
+    dx {init_struct.dx}, 
     t_min {init_struct.t_min}, 
     t_max {init_struct.t_max}, 
     alpha {init_struct.alpha} {
     
     max_iter = std::round((t_max-t_min)/dt);
 
-    // set potential function and its derivatives
+    // set potential function
     pot = [](double x) {return -exp(-pow(x, 2)) - 1.2*exp(-pow((x-2), 2));};
-    dpot_dx = [] (double x) {return 2*x*exp(-pow(x, 2)) + 2.4*(x-2)*exp(-pow((x-2), 2));};
-    d2pot_dx2 = [] (double x) { return  -4*pow(x, 2)*exp(-pow(x, 2)) \
-                                        + 2*exp(-pow(x, 2)) \
-                                        - 24/5.*pow((x-2), 2)*exp(-pow(x-2, 2)) \
-                                        + 12/5.*exp(-pow(x-2, 2));};
 
     // init result tables
     time_tab.resize(max_iter);
@@ -73,6 +69,16 @@ void Solver::saveResults(string filename) const {
         << total_e_tab(iter) << "\n";
     }
     file.close();
+}
+
+double Solver::dpot_dx(double x) {
+    /* five point 1st order derivative */
+    return (pot(x-2*dx) - 8*pot(x-dx) + 8*pot(x+dx) - pot(x+2*dx))/(12*dx);
+}
+
+double Solver::d2pot_dx2(double x) {
+    /* five point 2nd order derivative */
+    return (-pot(x-2*dx) + 16*pot(x-dx) - 30*pot(x) + 16*pot(x+dx) - pot(x+2*dx))/(12*dx);
 }
 
 double Solver::get_kin_e(double v) const {
