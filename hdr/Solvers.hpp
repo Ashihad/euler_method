@@ -49,9 +49,8 @@ class TrapezoidalSolver: public Solver {
         TrapezoidalSolver(struct sim_params&);
         virtual ~TrapezoidalSolver() = default;
         virtual void run();
-    protected:
-        const double eps {1e-6};
     private:
+        const double eps {1e-8};
         inline double F1(double, double, double, double);
         inline double F2(double, double, double, double);
 };
