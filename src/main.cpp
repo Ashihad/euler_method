@@ -13,7 +13,7 @@ int main() {
     basic_init_params.x0 = 2.8; 
     basic_init_params.dt = 0.01;
     basic_init_params.t_min = 0;
-    basic_init_params.t_max = 20;
+    basic_init_params.t_max = 100;
     basic_init_params.alpha = 0;
 
     ExplicitEulerSolver solver(basic_init_params);
@@ -21,6 +21,8 @@ int main() {
     solver.saveResults();
 
     TrapezoidalSolver solver2(basic_init_params);
+    solver2.run();
+    solver2.saveResults();
 
     return 0;
 }

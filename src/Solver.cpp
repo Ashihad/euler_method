@@ -3,6 +3,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace std;
+
 Solver::Solver(struct sim_params init_struct):
     m {init_struct.m}, 
     v0 {init_struct.v0}, 
@@ -38,9 +40,9 @@ Solver::Solver(struct sim_params init_struct):
     // init initial parameters
     x_tab(0) = x0;
     v_tab(0) = v0;
-    kin_e_tab(0) = get_kin_e(0);
-    pot_e_tab(0) = get_pot_e(0);
-    total_e_tab(0) = get_total_e(0);
+    kin_e_tab(0) = get_kin_e(v0);
+    pot_e_tab(0) = get_pot_e(x0);
+    total_e_tab(0) = get_total_e(x0, v0);
 }
 
 void Solver::printResults() const {
@@ -53,26 +55,33 @@ void Solver::printResults() const {
 }
 
 void Solver::saveResults(string filename) const {
-    ofstream file;
-    file.open(filename);
-    file << "iter t x v Ek Ep E" << endl;
+    ofstream file {filename, ios_base::out | ios_base::trunc};
+    if (!file.good()) {
+        cerr << "Can't open file " << filename << endl;
+        throw std::runtime_error("Could not open file");
+    }
+    string header {"iter t x v Ek Ep E"};
+    file << header << "\n";
     for (size_t iter = 0; iter < max_iter; ++iter) {
-        file << iter << " " << time_tab(iter) << " " \
-        << x_tab(iter) << " " << v_tab(iter) << " " \
-        << kin_e_tab(iter) << " " << pot_e_tab(iter) << " " \
-        << total_e_tab(iter) << endl;
+        file << iter << " " \
+        << time_tab(iter) << " " \
+        << x_tab(iter) << " " \
+        << v_tab(iter) << " " \
+        << kin_e_tab(iter) << " " \
+        << pot_e_tab(iter) << " " \
+        << total_e_tab(iter) << "\n";
     }
     file.close();
 }
 
-double Solver::get_kin_e(size_t iter) const {
-    return m*pow(v_tab(iter), 2)/2;
+double Solver::get_kin_e(double v) const {
+    return m*pow(v, 2)/2;
 }
 
-double Solver::get_pot_e(size_t iter) const {
-    return pot(x_tab(iter));
+double Solver::get_pot_e(double x) const {
+    return pot(x);
 }
 
-double Solver::get_total_e(size_t iter) const {
-    return get_kin_e(iter) - get_pot_e(iter);
+double Solver::get_total_e(double x, double v) const {
+    return get_kin_e(v) - get_pot_e(x);
 }

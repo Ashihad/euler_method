@@ -1,7 +1,6 @@
 #include <Eigen/Dense>
 #include <functional>
 
-using namespace std;
 using namespace Eigen;
 
 struct sim_params {
@@ -20,7 +19,7 @@ class Solver {
         virtual ~Solver() = default;
         virtual void run() = 0;
         virtual void printResults() const;
-        virtual void saveResults(string filename="results.txt") const;
+        virtual void saveResults(std::string filename="results.txt") const;
     protected:
         const double m;
         const double v0;
@@ -36,12 +35,12 @@ class Solver {
         Matrix<double, 1, Dynamic> kin_e_tab;
         Matrix<double, 1, Dynamic> pot_e_tab;
         Matrix<double, 1, Dynamic> total_e_tab;
-        function<double(double)> pot;
-        function<double(double)> dpot_dx;
-        function<double(double)> d2pot_dx2;
-        double get_kin_e(size_t) const;
-        double get_pot_e(size_t) const;
-        double get_total_e(size_t) const;
+        std::function<double(double)> pot;
+        std::function<double(double)> dpot_dx;
+        std::function<double(double)> d2pot_dx2;
+        double get_kin_e(double) const;
+        double get_pot_e(double) const;
+        double get_total_e(double, double) const;
 };
 
 class ExplicitEulerSolver: public Solver {

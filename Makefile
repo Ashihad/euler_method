@@ -15,7 +15,7 @@ objfiles = \
 
 linkedlibs = -lm
 
-flags = -Wall -Wextra -std=c++20 -O2
+flags = -Wall -Wextra -std=c++20 -O2 -g
 
 main: main.o Solver.o ExplicitEulerSolver.o TrapezoidalSolver.o
 	g++ $(objfiles) $(linkedlibs) -o main
