@@ -25,9 +25,7 @@ void TrapezoidalSolver::run() {
     lhs_matrix(0, 0) = 1;
     lhs_matrix(0, 1) = -dt/2;
     lhs_matrix(1, 1) = 1 + dt/2*alpha;
-    Vector2f lhs_vector;                // fill with arbitrary value greater than eps
-    lhs_vector(0) = eps+1;
-    lhs_vector(1) = eps+1;
+    Vector2f lhs_vector;                // empty, will be filled during solving
     Vector2f rhs_vector;
     rhs_vector(0) = -F1(x_tab[0], x_tab[0], v_tab[0], v_tab[0]);
     rhs_vector(1) = -F2(x_tab[0], x_tab[0], v_tab[0], v_tab[0]);
@@ -52,9 +50,9 @@ void TrapezoidalSolver::run() {
             x_mu += lhs_vector(0);
             v_mu += lhs_vector(1);
             ++mu_counter;
-            cout << mu_counter << "\n";
         }
         while ((abs(x_mu - x_mu_old) > eps && abs(v_mu - v_mu_old) > eps) && mu_counter <= 10);
+        
         x_tab[iter] = x_mu;
         v_tab[iter] = v_mu;
         kin_e_tab[iter] = get_kin_e(v_tab[iter]);
