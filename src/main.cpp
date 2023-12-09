@@ -1,11 +1,9 @@
 #include <iostream>
-#include <Eigen/Dense>
 
 #include "Solvers.hpp"
 #include "InitParams.hpp"
 
 using namespace std;
-using namespace Eigen;
 
 int main() {
     sim_params init_params = gen_basic_init_params();
