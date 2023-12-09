@@ -1,4 +1,5 @@
 #include "Solvers.hpp"
+#include "InitParams.hpp"
 
 using namespace std;
 

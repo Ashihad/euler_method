@@ -1,17 +1,11 @@
+#pragma once
 #include <Eigen/Dense>
 #include <functional>
 
+#include "InitParams.hpp"
+
 using namespace Eigen;
 
-struct sim_params {
-    double m;       // object mass [kg]
-    double v0;      // initial velocity [m/s]
-    double x0;      // initial position [m]
-    double dt;      // time step [s]
-    double t_min;   // start time [s]
-    double t_max;   // end time [s]
-    double alpha;   // damping parameter, (alpha > 0) [1/s]
-};
 
 class Solver {
     public:

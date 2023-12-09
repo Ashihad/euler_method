@@ -1,4 +1,5 @@
 #include "Solvers.hpp"
+#include "InitParams.hpp"
 #include <cmath>
 #include <iostream>
 
@@ -16,7 +17,6 @@ void TrapezoidalSolver::run() {
     };
 
     // lhs_matrix * lhs_vector = rhs_vector
-    cout << "in run" << "\n";
     Matrix2f lhs_matrix;
     lhs_matrix(0, 0) = 1;
     lhs_matrix(0, 1) = -dt/2;
@@ -38,10 +38,8 @@ void TrapezoidalSolver::run() {
         x_mu = x_tab(iter-1);
         v_mu = v_tab(iter-1);
         mu_counter = 0;
-        cout << "in main loop, iter=" << iter << "\n";
         // while ((abs(lhs_vector(0)) > eps && abs(lhs_vector(1)) > eps) && mu_counter >= 10) {
         while (mu_counter <= 5) {
-            cout << "mu= " << mu_counter << "\n";
             lhs_matrix(1, 0) = dt/(2*m)*d2pot_dx2(x_mu);
             rhs_vector(0) = -F1(x_mu, x_tab(iter-1), v_mu, v_tab(iter-1));
             rhs_vector(1) = -F2(x_mu, x_tab(iter-1), v_mu, v_tab(iter-1));

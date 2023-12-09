@@ -1,43 +1,47 @@
-hdrdir = hdr
-objdir = obj
-srcdir = src
-eigen = 3rd/eigen
-plotdir = plotting
-python_path = python_scripts
+CC=g++
 
-VPATH = $(hdrdir):$(objdir):$(srcdir)
+HDRDIR = hdr
+OBJDIR = obj
+SRCDIR = src
+EIGENDIR = 3rd/eigen
+PLOTDIR = plotting
 
-objfiles = \
-	$(objdir)/main.o \
-	$(objdir)/Solver.o \
-	$(objdir)/ExplicitEulerSolver.o \
-	$(objdir)/TrapezoidalSolver.o \
+LINKEDLIBS =  
 
-linkedlibs = -lm
+FLAGS = -Wall -Wextra -std=c++20 -O2 -g -I$(HDRDIR) -I$(EIGENDIR)
 
-flags = -Wall -Wextra -std=c++20 -O2 -g
+_HDRFILES = Solvers.hpp \
+			InitParams.hpp 
+HDRFILES = $(patsubst %,$(HDRDIR)/%,$(_HDRFILES))
 
-main: main.o Solver.o ExplicitEulerSolver.o TrapezoidalSolver.o
-	g++ $(objfiles) $(linkedlibs) -o main
+_OBJFILES = main.o \
+			InitParams.o \
+			Solver.o \
+			ExplicitEulerSolver.o \
+			TrapezoidalSolver.o \
+			InitParams.o
+OBJFILES = $(patsubst %,$(OBJDIR)/%,$(_OBJFILES))
 
-main.o: main.cpp
-	g++ -c $(srcdir)/main.cpp -I$(hdrdir) -I$(eigen) $(flags) -o $(objdir)/main.o
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(HDRFILES)
+	$(CC) -c -o $@ $< $(FLAGS)
 
-Solver.o:
-	g++ -c $(srcdir)/Solver.cpp -I$(hdrdir) -I$(eigen) $(flags) -o $(objdir)/Solver.o
+main: $(OBJFILES)
+	$(CC) -o $@ $^ $(FLAGS) $(LINKEDLIBS) 
 
-ExplicitEulerSolver.o: ExplicitEulerSolver.cpp
-	g++ -c $(srcdir)/ExplicitEulerSolver.cpp -I$(hdrdir) -I$(eigen) $(flags) -o $(objdir)/ExplicitEulerSolver.o
-
-TrapezoidalSolver.o: TrapezoidalSolver.cpp
-	g++ -c $(srcdir)/TrapezoidalSolver.cpp -I$(hdrdir) -I$(eigen) $(flags) -o $(objdir)/TrapezoidalSolver.o
+.PHONY: run plot clean
 
 run:
-	./main
+	@echo "Running program..."
+	@./main
+	@echo "Program finished"
 
 plot:
-	gnuplot -persist $(plotdir)/phase.p $(plotdir)/energy.p
+	gnuplot -persist -e "filename='results_euler.txt'" $(PLOTDIR)/phase.p
+	gnuplot -persist -e "filename='results_euler.txt'" $(PLOTDIR)/energy.p
+	gnuplot -persist -e "filename='results_trapezoidal.txt'" $(PLOTDIR)/phase.p
+	gnuplot -persist -e "filename='results_trapezoidal.txt'" $(PLOTDIR)/energy.p
 
 clean:
-	@rm $(objdir)/*  > /dev/null 2>&1 || echo "No files to remove"
-	@rm main
+	@rm $(OBJDIR)/*.o  > /dev/null 2>&1 && echo "Object files removed" || echo "No object files to remove"
+	@rm main >/dev/null 2>&1 && echo "Binary removed" || echo "No binary to remove"
+	@rm *.txt>/dev/null 2>&1 && echo "Result files removed" || echo "No result files to remove"

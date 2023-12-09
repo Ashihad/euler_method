@@ -1,3 +1,5 @@
+if (!exists("filename")) filename='results.txt'
+
 set title "Energies"
 set xzeroaxis
 set xlabel "time [s]"
@@ -19,7 +21,7 @@ set style line 3 \
     pointsize 0.2 \
     linecolor rgb 'green'
 
-plot "results.txt" u 2:5 with points ls 1 title "Kinetic energy", \
-    "results.txt" u 2:6 with points ls 2 title "Potential energy", \
-    "results.txt" u 2:7 with points ls 3 title "Total energy"
+plot    filename u 2:5 with points ls 1 title "Kinetic energy", \
+        filename u 2:6 with points ls 2 title "Potential energy", \
+        filename u 2:7 with points ls 3 title "Total energy"
 pause -1 
