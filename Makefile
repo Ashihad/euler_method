@@ -18,8 +18,9 @@ _OBJFILES = main.o \
 			InitParams.o \
 			Solver.o \
 			ExplicitEulerSolver.o \
+			ImplicitEulerSolver.o \
 			TrapezoidalSolver.o \
-			InitParams.o
+			InitParams.o 
 OBJFILES = $(patsubst %,$(OBJDIR)/%,$(_OBJFILES))
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(HDRFILES)
@@ -36,10 +37,8 @@ run:
 	@echo "Program finished"
 
 plot:
-	gnuplot -persist -e "filename='results_euler.txt'" $(PLOTDIR)/phase.p
-	gnuplot -persist -e "filename='results_euler.txt'" $(PLOTDIR)/energy.p
-	gnuplot -persist -e "filename='results_trapezoidal.txt'" $(PLOTDIR)/phase.p
-	gnuplot -persist -e "filename='results_trapezoidal.txt'" $(PLOTDIR)/energy.p
+	gnuplot -persist -e 'filename1="results_expl_euler.txt"; filename2="results_impl_euler.txt"; filename3="results_trapezoidal.txt"' $(PLOTDIR)/phase.p
+	gnuplot -persist -e 'filename1="results_expl_euler.txt"; filename2="results_impl_euler.txt"; filename3="results_trapezoidal.txt"' $(PLOTDIR)/energies.p
 
 clean:
 	@rm $(OBJDIR)/*.o  > /dev/null 2>&1 && echo "Object files removed" || echo "No object files to remove"

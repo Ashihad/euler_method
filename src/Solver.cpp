@@ -20,9 +20,6 @@ Solver::Solver(struct sim_params& init_struct) :
 
     verify_parameters();
 
-    // set potential function
-    pot = [](double x) {return -exp(-pow(x, 2)) - 1.2*exp(-pow((x-2), 2));};
-
     // init result tables
     time_tab.reserve(max_iter);
     x_tab.reserve(max_iter);
@@ -101,26 +98,4 @@ void Solver::verify_parameters() {
     if (alpha < 0) throw invalid_argument {"Damping parameter cannot be negative"};
     if (t_max - t_min <= 0) throw invalid_argument {"Time span cannot be negative, nor zero"};
     if (max_iter < 1) throw invalid_argument {"Time span is too short for simulation to run"};
-}
-
-double Solver::dpot_dx(double x) {
-    /* five point 1st order derivative */
-    return (pot(x-2*dx) - 8*pot(x-dx) + 8*pot(x+dx) - pot(x+2*dx))/(12*dx);
-}
-
-double Solver::d2pot_dx2(double x) {
-    /* five point 2nd order derivative */
-    return (-pot(x-2*dx) + 16*pot(x-dx) - 30*pot(x) + 16*pot(x+dx) - pot(x+2*dx))/(12*dx);
-}
-
-double Solver::get_kin_e(double v) const {
-    return m*pow(v, 2)/2;
-}
-
-double Solver::get_pot_e(double x) const {
-    return pot(x);
-}
-
-double Solver::get_total_e(double x, double v) const {
-    return get_kin_e(v) - get_pot_e(x);
 }
