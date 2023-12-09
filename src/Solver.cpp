@@ -2,7 +2,7 @@
 #include <fstream>
 #include <cmath>
 
-#include "Solvers.hpp"
+#include "Solver.hpp"
 #include "InitParams.hpp"
 
 using namespace std;

@@ -1,6 +1,8 @@
 #include <iostream>
 
-#include "Solvers.hpp"
+#include "ExplicitEulerSolver.hpp"
+#include "ImplicitEulerSolver.hpp"
+#include "TrapezoidalSolver.hpp"
 #include "InitParams.hpp"
 
 using namespace std;

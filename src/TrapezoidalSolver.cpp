@@ -2,7 +2,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 
-#include "Solvers.hpp"
+#include "TrapezoidalSolver.hpp"
 #include "InitParams.hpp"
 
 using namespace std;
