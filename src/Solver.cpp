@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <cmath>
+#include <numeric>
 
 #include "Solver.hpp"
 #include "InitParams.hpp"

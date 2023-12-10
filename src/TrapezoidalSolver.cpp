@@ -1,4 +1,4 @@
-#include <cmath>
+#include <numeric>
 #include <iostream>
 #include <Eigen/Dense>
 
